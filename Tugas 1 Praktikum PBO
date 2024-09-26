@@ -1,0 +1,172 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace PR_Polymorphism
+{
+    class Hewan
+    {
+        public string Nama;
+        public int Umur;
+        public Hewan(string nama, int umur)
+        {
+            Nama = nama;
+            Umur = umur;
+        }
+
+        public virtual string Suara()
+        {
+            return "Hewan ini bersuara";
+        }
+
+        public virtual string InfoHewan()
+        {
+            return $"Nama: {Nama}, Umur: {Umur}";
+        }
+    }
+
+    class Mamalia : Hewan
+    {
+        public int JumlahKaki;
+
+        public Mamalia(string nama, int umur, int jumlahKaki)
+            : base(nama, umur)
+        {
+            JumlahKaki = jumlahKaki;
+        }
+
+        public override string Suara()
+        {
+            return "Mamalia ini bersuara";
+        }
+    }
+
+    class Reptil : Hewan
+    {
+        public double PanjangTubuh;
+
+        public Reptil(string nama, int umur, double panjangTubuh)
+            : base(nama, umur)
+        {
+            PanjangTubuh = panjangTubuh;
+        }
+
+        public override string Suara()
+        {
+            return "Reptil ini bersuara";
+        }
+    }
+
+    class Singa : Mamalia
+    {
+        public Singa(string nama, int umur, int jumlahKaki)
+            : base(nama, umur, jumlahKaki)
+        {
+
+        }
+
+        public override string Suara()
+        {
+            return "Rawwrrr!";
+        }
+
+        public string Mengaum()
+        {
+            return $"{Nama} sedang mengaum!";
+        }
+    }
+
+    class Gajah : Mamalia
+    {
+        public Gajah(string nama, int umur, int jumlahKaki)
+            : base(nama, umur, jumlahKaki)
+        {
+        }
+
+        public override string Suara()
+        {
+            return "Preeeetttt!";
+        }
+    }
+
+    class Ular : Reptil
+    {
+        public Ular(string nama, int umur, double panjangTubuh)
+            : base(nama, umur, panjangTubuh)
+        {
+        }
+
+        public override string Suara()
+        {
+            return "Sttttttt!";
+        }
+
+        public string Merayap()
+        {
+            return $"{Nama} sedang merayap!";
+        }
+    }
+
+    class Buaya : Reptil
+    {
+        public Buaya(string nama, int umur, double panjangTubuh)
+            : base(nama, umur, panjangTubuh)
+        {
+        }
+
+        public override string Suara()
+        {
+            return "Aku Sayang Kamu!";
+        }
+    }
+
+    class KebunBinatang
+    {
+        private List<Hewan> koleksiHewan = new List<Hewan>();
+
+        public void TambahHewan(Hewan hewan)
+        {
+            koleksiHewan.Add(hewan);
+        }
+
+        public void DaftarHewan()
+        {
+            foreach (var hewan in koleksiHewan)
+            {
+                Console.WriteLine(hewan.InfoHewan());
+            }
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            KebunBinatang kebunBinatang = new KebunBinatang();
+
+            Singa singa = new Singa("Singa", 5, 4);
+            Gajah gajah = new Gajah("Gajah", 10, 4);
+            Ular ular = new Ular("Ular", 3, 1.5);
+            Buaya buaya = new Buaya("Buaya", 4, 4.2);
+
+            kebunBinatang.TambahHewan(singa);
+            kebunBinatang.TambahHewan(gajah); 
+            kebunBinatang.TambahHewan(ular);
+            kebunBinatang.TambahHewan(buaya);
+
+            Console.WriteLine("Daftar Hewan di Kebun Binatang:");
+            kebunBinatang.DaftarHewan();
+
+            Console.WriteLine("\nSuara Hewan:");
+            foreach (var hewan in new Hewan[] { singa, gajah, ular, buaya })
+            {
+                Console.WriteLine($"{hewan.Nama}: {hewan.Suara()}");
+            }
+
+            Console.WriteLine(singa.Mengaum());
+            Console.WriteLine(ular.Merayap());
+        }
+    }
+}
